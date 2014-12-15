@@ -1,0 +1,1 @@
+Django base templates for all ressources.ircam.fr website

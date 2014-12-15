@@ -1,0 +1,128 @@
+{% load static compress i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Ressources{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://code.jquery.com/jquery.js"></script>
+  {% compress css %}
+  <link type="text/less" rel="stylesheet" href="{% static 'less/ressources.less' %}" />
+  {% endcompress %}
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/menu-tooltip.js' %}"></script>
+  <script src="{% static 'js/language-selector.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  {% block head %}
+  {% endblock %}
+  <style>
+  header .navbar a {
+    font-variant: small-caps;
+  }
+  </style>
+  {% block js-bottom %}
+  {% endblock %}
+</head>
+<body>
+  {% block header %}
+  <a id="top" name="top"></a>
+  <header id="header" class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1><a href="http://ressources.ircam.fr">Ressources</a><small>.ircam</small></h1>
+        <form class="form-search" method="post" action="http://ressources.ircam.fr/27.html?&np1=0&np2=10&p=1">
+          <div class="input-group">
+            <input id="text_input" name="recherche" type="text" class="form-control search-query">
+            <input type="hidden" value="simple" name="search_type">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+          </div>
+          <div class="advanced-search">
+            <a href="http://ressources.ircam.fr/index.php?id=37">Recherche avancée</a>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <a id="logo-ircam" href="http://www.ircam.fr/" data-original-title="Vers www.ircam.fr" href="" data-placement="bottom" data-toggle="tooltip">IRCAM Centre Pompidou</a>
+      </div>
+    </div>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="{% if archiprod %}active{% endif %}">
+            <a data-original-title="Archives audiovisuelles des conférences et concerts de l'Ircam" data-placement="bottom" data-toggle="tooltip" href="{% block archiprod_url %}{% endblock %}" data-placement="bottom" data-toggle="tooltip" title="Archives audiovisuelles des conférences et concerts de l'Ircam">
+              Audio/Vidéo
+            </a>
+          </li>
+          <li class="{% if brahms %}active{% endif %}">
+            <a data-original-title="Base de documentation sur la musique contemporaine" data-placement="bottom" data-toggle="tooltip" href="{% block brahms_url %}{% endblock %}" data-placement="bottom" data-toggle="tooltip" title="Base de documentation sur la musique contemporaine">
+              B.r.a.h.m.s.
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="{% if repertoire %}active{% endif %}">
+            <a data-original-title="Base de documentation sur la musique contemporaine" data-placement="bottom" data-toggle="tooltip" href="{% block repertoire_url %}{% endblock %}" data-placement="bottom" data-toggle="tooltip" title="Œuvres commentées du répertoire de l'Ircam">
+              Analyses
+            </a>
+          </li>
+          {% endif %}
+          <li class="{% if catalogue %}active{% endif %}">
+            <a data-original-title="Catalogue de la médiathèque" data-placement="bottom" data-toggle="tooltip" href="{% block catalogue_url %}{% endblock %}" data-placement="bottom" data-toggle="tooltip" title="Catalogue de la médiathèque">
+              Catalogue
+            </a>
+          </li>
+          <li class="{% if articles %}active{% endif %}">
+            <a data-original-title="Articles scientifiques et musicologiques de l'Ircam" data-placement="bottom" data-toggle="tooltip" href="{% block articles_url %}{% endblock %}" data-placement="bottom" data-toggle="tooltip" title="Articles scientifiques et musicologiques de l'Ircam">
+              Articles
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div id="lang">
+          <form style="display:none;" action="/i18n/setlang/" method="post" id="language-selector">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+            <input type="radio" name="language" id="{{ language.code }}" value="{{ language.code }}" {% if LANGUAGE_CODE == language.code %} checked {% endif %}> <label for="{{ language.code }}">{{ language.code }}</label>
+            {% endfor %}
+          </form>
+      <a><label for="fr" style="font-weight:normal">fr</label></a>
+      <a><label for="en" style="font-weight:normal">en</label></a>
+  </div>
+  </header>
+  {% endblock %}
+  {% block content %}
+  {% endblock %}
+  {% block footer %}
+  <footer id="footer" class="container">
+    <h2>Ircam, l'art de l'innovation</h2>
+    <div>
+      <a href="">Equipe</a>
+      <a href="">Contact</a>
+      <a href="">A propos</a>
+      <a href="">Plan du site</a>
+    </div>
+    <a title="Haut de page" class="top" href="#top">Haut de page</a>
+  </footer>
+  {% endblock %}
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+  var pageTracker = _gat._getTracker("UA-5943999-1");
+  pageTracker._trackPageview();
+  </script>
+</body>
+</html>
