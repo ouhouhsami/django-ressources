@@ -67,13 +67,11 @@
               B.r.a.h.m.s.
             </a>
           </li>
-          {% if user.is_authenticated %}
           <li class="{% if repertoire %}active{% endif %}">
             <a data-original-title="Base de documentation sur la musique contemporaine" data-placement="bottom" data-toggle="tooltip" href="{% block repertoire_url %}{% endblock %}" data-placement="bottom" data-toggle="tooltip" title="Œuvres commentées du répertoire de l'Ircam">
               Analyses
             </a>
           </li>
-          {% endif %}
           <li class="{% if catalogue %}active{% endif %}">
             <a data-original-title="Catalogue de la médiathèque" data-placement="bottom" data-toggle="tooltip" href="{% block catalogue_url %}{% endblock %}" data-placement="bottom" data-toggle="tooltip" title="Catalogue de la médiathèque">
               Catalogue
