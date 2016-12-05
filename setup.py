@@ -13,7 +13,7 @@ setup(
     description='Django base templates for all ressources.ircam.fr website.',
     long_description=open('README.txt').read(),
     install_requires=[
-        "django-compressor==1.3",
+        "django-compressor==2.1",
     ],
     zip_safe=False,
 )
